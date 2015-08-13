@@ -1,0 +1,24 @@
+</div>
+<!-- templates -->
+<script type="text/template" id="postLink-tmp"> 
+	<a href="/posts/{{ id }}">{{ title }}</a>
+</script>
+<script type="text/template" id="postLinks-tmp"> 
+  <h1> My blog</h1><ul></ul>
+</script>
+<!-- end templates -->
+
+<!-- scripts  -->
+  <!-- libraries -->
+  <script src="/components/jquery/dist/jquery.js"></script>
+  <script src="/components/underscore/underscore.js"></script>
+  <script src="/components/backbone/backbone.js"></script>
+  <% if (ENV_DEVELOPMENT) { %>
+    <script src="http://localhost:35729/livereload.js"></script>
+  <% } %>
+  <!-- end libraries -->
+
+  <script src="/js/main.js"></script>
+<!-- end scripts -->
+</body>
+</html>

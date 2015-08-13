@@ -10,44 +10,21 @@ var Posts = Backbone.Collection.extend({
 
 
 
-var PostView = Backbone.View.extend({
-  tagName: 'li',
-  template: _.template($('#postLink-tmp').html()),
 
-  render: function(){
-    this.$el.html(this.template(this.model.toJSON()));
-    return this;
-  }
-});
-
-var PostListsView = Backbone.View.extend({
-  template: _.template($('#postLinks-tmp').html()),
-
-  render: function(){
-    this.$el.html( this.template());
-    var ul = this.$el.find('ul');
-    
-    _.each(this.collection.toArray(), function(post){
-      
-      console.log(post);
-      ul.append(new PostView({
-        model: post
-      }).render().el);
-
-    });
-    return this;
-  }
-});
-
+// ROUTER
 var PostRouter = Backbone.Router.extend({
+
   initialize: function(options){
     this.posts = options.posts;
     this.main = options.main;
   },
+
   routes: {
     '': 'index',
-    'posts/:id':'singlePost'
+    'posts/:id': 'singlePost',
+    'post/new': 'newPost'
   },
+
   index: function(){
     var pv = new PostListsView({collection: this.posts});
     this.main.html(pv.render().el);
@@ -55,20 +32,38 @@ var PostRouter = Backbone.Router.extend({
 
   singlePost: function(id){
     console.log("view post" + id);
+    var post = this.posts.get(id);
+    var pv = new PostView({model: post});
+    this.main.html(pv.render().el);
+  },
+
+  newPost: function(){
+    var newPostForm = new PostFormView({posts: this.posts});
+    this.main.html(newPostForm.render().el);
   }
 });
 
+var postRouter;
 
 //application loaded
 $(function(){
   var posts = new Posts();
   
   posts.fetch().success(function(){
-    var postList = new PostListsView({collection: posts});
-    $('#main').append(
-      postList.render().el
-      );
 
-  })
+    // var postList = new PostListsView({collection: posts});
+    // $('#main').append(
+    //   postList.render().el
+    //   );|
+
+    postRouter = new PostRouter({
+      posts: posts,
+      main: $('#main')
+    });
+
+    Backbone.history.start({pushState: true});
+  });
+
+
 
 })

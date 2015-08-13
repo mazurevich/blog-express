@@ -1,24 +1,41 @@
 </div>
 <!-- templates -->
-<script type="text/template" id="postLink-tmp"> 
-	<a href="/posts/{{ id }}">{{ title }}</a>
-</script>
-<script type="text/template" id="postLinks-tmp"> 
-  <h1> My blog</h1><ul></ul>
-</script>
+	<script type="text/template" id="postLink-tmp"> 
+		<a href="/posts/{{ id }}">{{ title }}</a>
+	</script>
+
+	<script type="text/template" id="postLinks-tmp"> 
+		<h1> My blog</h1><ul></ul>
+		<button type="button" class="btn js-newPost"> Add New Post </button>
+	</script>
+
+	<script type="text/template" id="postView-tmp">
+		<h1>{{ title }}</h1>
+		<p>{{ pubDate }}</p>
+		{{content}}
+		<a href="/">All Posts</a>
+	</script>
+
+	<script type="text/template" id="postFormView">
+		<a href="/">All Posts</a>
+		<input type="text" name="title" id="postTitle" placeholder="post title">
+		<textarea name="content" id="postText"></textarea>
+		<button id="submitPost" type="submit">Post</button>
+	</script>
 <!-- end templates -->
 
 <!-- scripts  -->
-  <!-- libraries -->
-  <script src="/components/jquery/dist/jquery.js"></script>
-  <script src="/components/underscore/underscore.js"></script>
-  <script src="/components/backbone/backbone.js"></script>
-  <% if (ENV_DEVELOPMENT) { %>
-    <script src="http://localhost:35729/livereload.js"></script>
-  <% } %>
-  <!-- end libraries -->
-
-  <script src="/js/main.js"></script>
+	<!-- libraries -->
+	<script src="/components/jquery/dist/jquery.js"></script>
+	<script src="/components/underscore/underscore.js"></script>
+	<script src="/components/backbone/backbone.js"></script>
+	<script src="/components/moment/min/moment.min.js"></script>
+	<% if (ENV_DEVELOPMENT) { %>
+		<script src="http://localhost:35729/livereload.js"></script>
+	<% } %>
+	<!-- end libraries -->
+	<script src="/js/views.js"></script>
+	<script src="/js/main.js"></script>
 <!-- end scripts -->
 </body>
 </html>

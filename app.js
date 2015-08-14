@@ -37,15 +37,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/posts', function(req, res){
-    console.log('here in posts req')
+
     posts.find(function(er, result){
-        console.log(arguments)
         res.json(result);
     });
 });
+
 app.post('/posts', function(req, res){
+    console.log('!!!!!!!!!!!!!!!!!! im in the post of Posts !!!!!!')
     posts.insert(req.body, function(er, result){
-        res.json(result);
+        // res.json(result);
+        res.render('index');
     })
 })
 

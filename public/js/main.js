@@ -9,8 +9,6 @@ var Posts = Backbone.Collection.extend({
 });
 
 
-
-
 // ROUTER
 var PostRouter = Backbone.Router.extend({
 
@@ -21,8 +19,8 @@ var PostRouter = Backbone.Router.extend({
 
   routes: {
     '': 'index',
-    'posts/:id': 'singlePost',
-    'post/new': 'newPost'
+    'posts/view/:id': 'singlePost',
+    'posts/new': 'newPost'
   },
 
   index: function(){
@@ -42,6 +40,21 @@ var PostRouter = Backbone.Router.extend({
     this.main.html(newPostForm.render().el);
   }
 });
+
+//COMMENTS
+var Comment = Backbone.Model.extend({});
+
+var Comments = Backbone.Collection.extend({
+  initialize: function(models, options){
+    this.post = options.post;
+  },
+  url: function(){
+    return this.post.url()+"/comments";
+  }
+})
+
+
+
 
 var postRouter;
 

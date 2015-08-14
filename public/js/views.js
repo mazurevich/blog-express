@@ -30,7 +30,7 @@ var PostListsView = Backbone.View.extend({
   },
 
   handleClick: function(){
-    postRouter.navigate('post/new', {trigger: true});
+    postRouter.navigate('posts/new', {trigger: true});
   },
 
   render: function(){
@@ -75,8 +75,8 @@ var PostView = Backbone.View.extend({
 var PostFormView = Backbone.View.extend({
   tagName: 'form',
   template: _.template($('#postFormView').html()),
-  initialize: function(){
-    // this.posts = options.post;
+  initialize: function(options){
+    this.posts = options.posts;
   },
   events: {
     'click button': 'createPost'
@@ -86,11 +86,23 @@ var PostFormView = Backbone.View.extend({
     return this;
   },
   createPost: function(e){
-    var postAttrs = this.$el.serrialize();
-    postAttrs.pubDate = new Date();
+    var postAttrs = {
+      id: this.getFreeId()+1,
+      title : $('#postTitle').val(),
+      content : $('#postText').val(),
+      pubDate: new Date()
+    }
     
     this.posts.create(postAttrs);
+    this.posts.sync();
     postRouter.navigate('/', {trigger: true});
     return false;
+  },
+
+  getFreeId: function(){
+    return Math.max(this.posts.toArray().map(function(e){
+      return e.id;
+    }))
+    
   }
 })
